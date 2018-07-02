@@ -1,5 +1,19 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Name:    Yeti Forums
+ * Author:  Chris Baines
+ *          t3utonict3rror@gmail.com
+ *
+ * Created:  02.07.2018
+ *
+ * Requirements: PHP5 or above
+ *
+ * @package    Yeti Forums
+ * @author     Chris Baines
+ * @link       https://github.com/IrradiatedChimp/Yeti
+ */
+
 class Install extends CI_Controller {
 
     public function __construct()
@@ -248,6 +262,36 @@ class Install extends CI_Controller {
                 $this->render('install/step4', $data);
             }
 
+            // replace site title in the ion_auth.php config file
+            $find    = '$config[\'site_title\'] =';
+            $replace = '$config[\'site_title\'] = \'' . $forum_title . '\';' . "\n";
+
+            if ($this->install_m->editIonAuthConfigFile($find, $replace) !== true) {
+
+                // An error has occured, grab the message from the install_lang.php file.
+                $data->error = 'The site title in your Ion Auth config file cannot be replaced...';
+
+                // Send the page and data to the renderer.
+                $this->render('install/step4', $data);
+
+                return;
+            }
+
+            // replace admin email in the ion_auth.php config file
+            $find    = '$config[\'admin_email\'] =';
+            $replace = '$config[\'admin_email\'] = \'' . $email . '\';' . "\n";
+
+            if ($this->install_m->editIonAuthConfigFile($find, $replace) !== true) {
+
+                // An error has occured, grab the message from the install_lang.php file.
+                $data->error = 'The admin email in your Ion Auth config file cannot be replaced...';
+
+                // Send the page and data to the renderer.
+                $this->render('install/step4', $data);
+
+                return;
+            }
+
             // Set the site email address.
             $find    = '$config[\'site_email\'] =';
             $replace = '$config[\'site_email\'] = \'' . $email . '\';' . "\n";
@@ -255,7 +299,7 @@ class Install extends CI_Controller {
             if ($this->install_m->editForumConfigFile($find, $replace) !== true) {
 
                 // An error has occured, grab the message from the install_lang.php file.
-                $data->error = 'The Forum email address on your forum config file cannot be updated...';
+                $data->error = 'The Forum email address in your forum config file cannot be updated...';
 
                 // Send the page and data to the renderer.
                 $this->render('install/step4', $data);

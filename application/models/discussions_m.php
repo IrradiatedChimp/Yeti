@@ -1,5 +1,19 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Name:    Yeti Forums
+ * Author:  Chris Baines
+ *          t3utonict3rror@gmail.com
+ *
+ * Created:  02.07.2018
+ *
+ * Requirements: PHP5 or above
+ *
+ * @package    Yeti Forums
+ * @author     Chris Baines
+ * @link       https://github.com/IrradiatedChimp/Yeti
+ */
+
 class discussions_m extends CI_Model {
 
     public function __construct()
@@ -12,7 +26,7 @@ class discussions_m extends CI_Model {
     {
         $this->db->order_by('created_at', 'DESC');
         $this->db->order_by('is_sticky', 'DESC');
-        
+
         $query = $this->db->get('discussions');
 
         if ($query->num_rows() > 0) {

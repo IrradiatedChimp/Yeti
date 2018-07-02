@@ -1,5 +1,19 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Name:    Yeti Forums
+ * Author:  Chris Baines
+ *          t3utonict3rror@gmail.com
+ *
+ * Created:  02.07.2018
+ *
+ * Requirements: PHP5 or above
+ *
+ * @package    Yeti Forums
+ * @author     Chris Baines
+ * @link       https://github.com/IrradiatedChimp/Yeti
+ */
+
 class Install_m extends CI_Model {
 
     public $variable;
@@ -74,6 +88,38 @@ class Install_m extends CI_Model {
             return true;
         } else {
             unlink(APPPATH . 'config/config.tmp');
+            return false;
+        }
+    }
+
+    public function editIonAuthConfigFile($find, $replace)
+    {
+        // Reading and Writing file locations.
+        $reading = fopen(APPPATH . 'config/ion_auth.php', 'r');
+        $writing = fopen(APPPATH . 'config/ion_auth.tmp', 'w');
+
+        // Used for holding a true or false for checking if the line has been replaced.
+        $replaced = false;
+
+        while (!feof($reading)) {
+            $line = fgets($reading);
+
+            if (stristr($line, $find)) {
+                $line = $replace;
+                $replaced = true;
+            }
+            fputs($writing, $line);
+        }
+
+        fclose($reading);
+        fclose($writing);
+
+        // Do not overwrite the file if nothing has been changed.
+        if ($replaced) {
+            rename(APPPATH . 'config/ion_auth.tmp', APPPATH . 'config/ion_auth.php');
+            return true;
+        } else {
+            unlink(APPPATH . 'config/ion_auth.tmp');
             return false;
         }
     }
