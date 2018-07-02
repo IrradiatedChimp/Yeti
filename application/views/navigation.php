@@ -47,13 +47,24 @@
                         </span>
                     </p>
                 </div>
-                <a class="navbar-item" href="<?= site_url('users/sign_up') ?>">
-                    Sign Up
-                </a>
 
-                <a class="navbar-item" href="<?= site_url('users/log_in') ?>">
-                    Log In
-                </a>
+                <?php if (!$this->ion_auth->logged_in()) : ?>
+
+                    <a class="navbar-item" href="<?= site_url('users/sign_up') ?>">
+                        Sign Up
+                    </a>
+
+                    <a class="navbar-item" href="<?= site_url('users/log_in') ?>">
+                        Log In
+                    </a>
+
+                <?php else : ?>
+
+                    <a class="navbar-item" href="<?= site_url('users/logout') ?>">
+                        Log Out
+                    </a>
+                    
+                <?php endif ?>
             </div>
         </div>
     </div>
