@@ -3,7 +3,7 @@
 <nav class="navbar is-light is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand logo">
-            <a class="navbar-item" href="#">
+            <a class="navbar-item" href="<?= site_url() ?>">
                 <img src="<?= base_url('assets/img/logo.png') ?>"> Yeti Forums
             </a>
 
@@ -32,11 +32,11 @@
                         </span>
                     </p>
                 </div>
-                <a class="navbar-item" href="#">
+                <a class="navbar-item" href="<?= site_url('users/sign_up') ?>">
                     Sign Up
                 </a>
 
-                <a class="navbar-item" href="#">
+                <a class="navbar-item" href="<?= site_url('users/log_in') ?>">
                     Log In
                 </a>
             </div>

@@ -37,7 +37,7 @@
             <?php if ($discussion->is_sticky === '1') : ?>
                 <article class="media">
                     <figure class="media-left">
-                        <p class="image is-64x64">
+                        <p class="image is-64x64 avatar">
                             <img src='<?= $discussion->latest_post->avatar ?>'/>
                         </p>
                     </figure>
@@ -62,8 +62,8 @@
             <?php else : ?>
                 <article class="media">
                     <figure class="media-left">
-                        <p class="image is-48x48">
-                            <img src='https://avataaars.io/?avatarStyle=Circle&topType=LongHairBun&accessoriesType=Blank&hairColor=Brown&facialHairType=BeardLight&facialHairColor=BrownDark&clotheType=Hoodie&clotheColor=Black&eyeType=Happy&eyebrowType=DefaultNatural&mouthType=Tongue&skinColor=Light'/>
+                        <p class="image is-48x48 avatar">
+                            <img src='<?= $discussion->latest_post->avatar ?>'/>
                         </p>
                     </figure>
 

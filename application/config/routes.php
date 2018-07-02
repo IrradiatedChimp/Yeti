@@ -54,6 +54,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['(:any)'] = 'forums/index/$1';
 $route['discussion/create'] = 'discussions/create';
 
-$route['default_controller'] = 'forums';
+$route['default_controller'] = 'install';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
