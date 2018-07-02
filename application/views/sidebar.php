@@ -8,8 +8,10 @@
     </ul>
     <p class="menu-label">Categories</p>
     <ul class="menu-list">
-        <?php foreach($categories as $category) : ?>
-        <li><a href="<?= $category->permalink ?>"><span class="icon <?= $category->class ?>"><i class="fas fa-square"></i></span> <?= $category->name ?></a></li>
-    <?php endforeach; ?>
+        <?php if ($categories) : ?>
+            <?php foreach($categories as $category) : ?>
+                <li><a href="<?= $category->permalink ?>"><span class="icon <?= $category->class ?>"><i class="fas fa-square"></i></span> <?= $category->name ?></a></li>
+            <?php endforeach; ?>
+        <?php endif ?>
     </ul>
 </aside>

@@ -30,23 +30,27 @@ class Forums extends MY_Controller {
             // Get the discussions from the database.
             $discussions = $this->discussions->getAllDiscussions();
 
-            foreach($discussions as $discussion) {
+            if ($discussions) {
 
-                $discussion->posts = $this->posts->getDiscussionPosts($discussion->id);
-                $discussion->count_posts = count($discussion->posts);
+                foreach($discussions as $discussion) {
 
-                if($discussion->count_posts > 0) {
+                    $discussion->posts = $this->posts->getDiscussionPosts($discussion->id);
+                    $discussion->count_posts = count($discussion->posts);
 
-                    // The discussion has posts.
-                    $discussion->latest_post = $this->posts->getDiscussionLatestPost($discussion->id);
+                    if($discussion->count_posts > 0) {
 
-                    // Get the user object.
-                    $user = $this->ion_auth->user($discussion->latest_post->user_id)->row();
+                        // The discussion has posts.
+                        $discussion->latest_post = $this->posts->getDiscussionLatestPost($discussion->id);
 
-                    $discussion->latest_post->author = $user->username;
-                    $discussion->permalink = site_url('discussion/view/'.$discussion->slug);
-                    $discussion->latest_post->avatar = $this->gravatar->get($user->email);
+                        // Get the user object.
+                        $user = $this->ion_auth->user($discussion->latest_post->user_id)->row();
+
+                        $discussion->latest_post->author = $user->username;
+                        $discussion->permalink = site_url('discussion/view/'.$discussion->slug);
+                        $discussion->latest_post->avatar = $this->gravatar->get($user->email);
+                    }
                 }
+
             }
 
             $data->discussions = $discussions;

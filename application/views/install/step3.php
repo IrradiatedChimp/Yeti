@@ -6,7 +6,7 @@
             <div class="column is-4 is-offset-4">
                 <h3 class="title has-text-grey">Yeti Forums Installer</h3>
                 <div class="box">
-                    <figure class="avatar">
+                    <figure class="avatar_install">
                         <img src="<?= base_url('assets/img/logo.png') ?>" width="120">
                     </figure>
 

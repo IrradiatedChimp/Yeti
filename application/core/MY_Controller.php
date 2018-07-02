@@ -25,8 +25,10 @@ class MY_Controller extends CI_Controller {
         // Grab the categories from the database.
         $categories = $this->categories->getCategories();
 
-        foreach($categories as $category) {
-            $category->permalink = site_url($category->slug);
+        if ($categories) {
+            foreach($categories as $category) {
+                $category->permalink = site_url($category->slug);
+            }
         }
 
         $sidebar = array(
