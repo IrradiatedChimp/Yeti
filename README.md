@@ -1,4 +1,4 @@
-# Yeti
+# Yeti Forums
 Yeti Forums is a simple PHP/MySQL forums solution running on the Codeigniter & Bulma Css frameworks. It is a project I am developing in my spare time after a lengthy break from any form of coding.
 
 <strong>Installation:</strong><br>
