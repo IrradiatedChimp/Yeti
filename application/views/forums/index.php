@@ -101,7 +101,7 @@
             <?php endif; ?>
         <?php endforeach; ?>
     <?php else : ?>
-        <p>No discussion exist in the database, Please create some.</p>
+        <p>No discussions exist in the database, Please create some.</p>
     <?php endif; ?>
 
 </div>

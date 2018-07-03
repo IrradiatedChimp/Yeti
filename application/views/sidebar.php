@@ -27,6 +27,8 @@
             <?php foreach($categories as $category) : ?>
                 <li><a href="<?= $category->permalink ?>"><span class="icon <?= $category->class ?>"><i class="fas fa-square"></i></span> <?= $category->name ?></a></li>
             <?php endforeach; ?>
+        <?php else : ?>
+            <p>None</p>
         <?php endif ?>
     </ul>
 </aside>

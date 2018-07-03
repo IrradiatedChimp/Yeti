@@ -21,3 +21,4 @@ application/config/config.php
 application/config/database.php
 application/config/routes.php
 application/config/ion_auth.php
+.DS_Store
