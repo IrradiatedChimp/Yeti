@@ -86,8 +86,10 @@
                         <div class="content">
                             <p class="has-text-grey-light">
                                 <span class="is-size-6"><a href="<?= $discussion->permalink ?>"><?= $discussion->title ?></a></span><br>
-                                <small class="has-text-weight-light"><a href="<?= site_url('users/'.$discussion->latest_post->author) ?>"><?= $discussion->latest_post->author ?></a> replied <?= $discussion->latest_post->created_at ?></small>
+                                <small class="has-text-weight-light"><a href="<?= site_url('users/'.$discussion->latest_post->author) ?>"><?= $discussion->latest_post->author ?></a> replied <?= $discussion->latest_post->created_at ?></small><br>
+                                <span class="tag is-<?= $discussion->category->class ?>"><?= $discussion->category->name ?></span>
                             </p>
+
                         </div>
                     </div>
 

@@ -20,18 +20,10 @@ class Forums extends MY_Controller {
     {
         parent::__construct();
 
-        // Load the database.
-        $this->load->database();
-
-        // Load required helpers.
-        $this->load->helper('url');
-
         // Load required models.
         $this->load->model('categories_m', 'categories');
         $this->load->model('discussions_m', 'discussions');
         $this->load->model('posts_m', 'posts');
-
-        $this->load->library(array('ion_auth', 'gravatar'));
     }
 
     public function index($slug = false)
@@ -50,6 +42,7 @@ class Forums extends MY_Controller {
 
                     $discussion->posts = $this->posts->getDiscussionPosts($discussion->id);
                     $discussion->count_posts = count($discussion->posts);
+                    $discussion->category = $this->categories->getCategory($discussion->category_id);
 
                     if($discussion->count_posts > 0) {
 
@@ -61,7 +54,7 @@ class Forums extends MY_Controller {
 
                         $discussion->latest_post->author = $user->username;
                         $discussion->permalink = site_url('discussion/view/'.$discussion->slug);
-                        $discussion->latest_post->avatar = $this->gravatar->get($user->email);
+                        $discussion->latest_post->avatar = $this->gravatar->get($user->email);;
                     }
                 }
 

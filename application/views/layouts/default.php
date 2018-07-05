@@ -38,5 +38,11 @@
 
 {footer}
 
+<!-- Include JQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<!-- Include application js -->
+<script src="<?= base_url('assets/js/application.js') ?>"></script>
+
 </body>
 </html>

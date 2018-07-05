@@ -40,6 +40,18 @@ class posts_m extends CI_Model {
         return $this->db->get()->row();
     }
 
+    public function createPost($discussion_id, $user_id, $content)
+    {
+        $data = array(
+            'discussion_id' => $discussion_id,
+            'user_id' => $user_id,
+            'content' => $content,
+            'created_at' => date('Y-m-j H:i:s'),
+        );
+
+        return $this->db->insert('posts', $data);
+    }
+
 }
 
 /* End of file posts_m.php */

@@ -19,7 +19,7 @@
         <div class="container has-text-centered">
             <div class="column is-4 is-offset-4">
                 <h3 class="title has-text-grey">Yeti Forums Installer</h3>
-                <div class="box">
+                <div class="box_install">
                     <figure class="avatar_install">
                         <img src="<?= base_url('assets/img/logo.png') ?>" width="120">
                     </figure>
@@ -36,7 +36,7 @@
                     <p>Login as the Admin (with the account you created just before) once the installation is finished, and start to build your forum.</p>
                     <p><strong>Have fun, and thank you for using Yeti Forums.</strong></p>
 
-                    <hr>
+                    <div class="is-divider"></div>
 
                     <div class="field">
                         <div class="control">

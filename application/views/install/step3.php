@@ -19,7 +19,7 @@
         <div class="container has-text-centered">
             <div class="column is-4 is-offset-4">
                 <h3 class="title has-text-grey">Yeti Forums Installer</h3>
-                <div class="box">
+                <div class="box_install">
                     <figure class="avatar_install">
                         <img src="<?= base_url('assets/img/logo.png') ?>" width="120">
                     </figure>
@@ -48,7 +48,7 @@
 
                         <input type="hidden" id="db_name_cookie" name="db_name_cookie" value="<?= $_COOKIE['db_name'] ?>">
 
-                        <hr>
+                        <div class="is-divider"></div>
 
                         <div class="field">
                             <div class="control">

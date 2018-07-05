@@ -20,14 +20,23 @@ class MY_Controller extends CI_Controller {
     {
         parent::__construct();
 
-        $this->load->library('parser');
+        // Load the database.
+        $this->load->database();
+
+        // Load required helpers.
+        $this->load->helper('url');
+
+        // Load libs
+        $this->load->library(array('ion_auth', 'gravatar', 'parser'));
+
+        // Load Models
+        $this->load->model('categories_m', 'categories');
+        $this->load->model('discussions_m', 'discussions');
+        $this->load->model('posts_m', 'posts');
     }
 
     public function render($page, $data = NULL, $layout = 'default')
     {
-        // Load models
-        $this->load->model('categories_m', 'categories');
-
         $header = array(
             'title' => 'Yeti Forums',
         );

@@ -36,6 +36,28 @@ class discussions_m extends CI_Model {
         }
     }
 
+    public function createDiscussion($title, $content, $category)
+    {
+        // Get the user ID.
+        $user = $this->ion_auth->user()->row();
+        $user_id = $user->id;
+
+        $data = array(
+            'title' => $title,
+            'slug' => strtolower(url_title($title)),
+            'category_id' => $category,
+            'created_at' => date('Y-m-j H:i:s'),
+            'user_id' => $user_id,
+        );
+
+        if ($this->db->insert('discussions', $data)) {
+            $discussion_id = $this->db->insert_id();
+
+            return $this->posts->createPost($discussion_id, $user_id, $content);
+        }
+        return false;
+    }
+
 }
 
 /* End of file discussions_m.php */
