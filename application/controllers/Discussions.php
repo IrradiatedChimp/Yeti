@@ -53,13 +53,16 @@ class Discussions extends MY_Controller {
                 }
             }
 
+            // Add the data to the data object.
             $data->categories = $categories;
 
+            // Send the data to the page renderer.
             $this->render('discussions/create', $data);
+
         } else {
 
                 $title = $this->input->post('title');
-                $content = $this->input->post('content');
+                $content = nl2br($this->input->post('content'));
                 $category = implode(' ', $this->input->post('category'));
 
             if ($this->discussions->createDiscussion($title, $content, $category)) {
@@ -119,13 +122,57 @@ class Discussions extends MY_Controller {
 
             $data->posts = $posts;
             $data->discussion_slug = $discussion->slug;
-            $data->sticky = $discussion->is_sticky;
             $data->locked = $discussion->is_closed;
             $hero_data->discussion_title = $discussion->title;
             $hero_data->category = '<span class="tag is-'.$category->class.'"> '.anchor( site_url($category->slug), $category->name).' </span>';
 
             // Send the data to the parser.
             $this->renderHero('discussions/discussion', $data, $hero_data);
+        }
+    }
+
+    public function reply($discussion_slug)
+    {
+        // Create the data object.
+        $data = new stdClass();
+
+        // Grab the discussion id from the database.
+        $discussion_id = $this->discussions->getIDFromSlug($discussion_slug);
+
+        // Get the discussion from the database.
+        $discussion = $this->discussions->getDiscussion($discussion_id);
+
+        // Setup form validation rules.
+        $this->form_validation->set_rules('content', 'Content', 'required|trim');
+
+        // Check form validation.
+        if ($this->form_validation->run() === false) {
+
+            $data->discussion_id = $discussion_id;
+            $data->discussion_title = $discussion->title;
+
+            // Send the data to the page renderer.
+            $this->render('discussions/reply', $data);
+
+        } else {
+
+            // Grab the data from the form.
+            $content = nl2br($this->input->post('content'));
+
+            // Grab the logged in user.
+            $user = $this->ion_auth->user()->row();
+
+            if ($this->posts->createPost($discussion_id, $user->id, $content)) {
+
+                // Post has been saved, redirect with a message
+
+                //*TODO - Add message system
+                redirect( site_url('discussion/view/'.$discussion_slug));
+
+            } else {
+                redirect('discussion/reply/'.$discussion_slug);
+            }
+
         }
     }
 

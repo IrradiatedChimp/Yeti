@@ -53,6 +53,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /* Forum routes */
 $route['(:any)'] = 'forums/index/$1';
 $route['discussion/create'] = 'discussions/create';
+$route['discussion/view/(:any)'] = 'discussions/view/$1';
+$route['discussion/reply/(:any)'] = 'discussions/reply/$1';
 
 $route['default_controller'] = 'install';
 $route['404_override'] = '';
