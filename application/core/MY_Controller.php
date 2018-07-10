@@ -66,7 +66,38 @@ class MY_Controller extends CI_Controller {
         $template_data = array(
             'header' => $this->parser->parse('header', $header, true),
             'navigation' => $this->parser->parse('navigation', $navigation, true),
-            'sidebar' => $this->parser->parse('sidebar', $sidebar, true),
+            'sidebar' => $this->parser->parse('sidebar_left', $sidebar, true),
+            'content' => $this->parser->parse($page, $data, true),
+            'footer' => $this->parser->parse('footer', $footer, true),
+        );
+
+        $this->parser->parse('layouts/'.$layout, $template_data);
+    }
+
+    public function renderHero($page, $data = null, $hero_data = null, $layout = 'default_hero')
+    {
+        $header = array(
+            'title' => 'Yeti Forums',
+        );
+
+        $navigation = array(
+
+        );
+
+        $sidebar = array(
+            'reply_to_discussion' => anchor(site_url('discussion/reply/'.$data->discussion_slug.''), 'Reply to Discussion', array('class' => 'button is-info is-block')),
+            'locked' => $data->locked,
+        );
+
+        $footer = array(
+
+        );
+
+        $template_data = array(
+            'header' => $this->parser->parse('header', $header, true),
+            'navigation' => $this->parser->parse('navigation', $navigation, true),
+            'hero' => $this->parser->parse('hero', $hero_data, true),
+            'sidebar' => $this->parser->parse('sidebar_right', $sidebar, true),
             'content' => $this->parser->parse($page, $data, true),
             'footer' => $this->parser->parse('footer', $footer, true),
         );

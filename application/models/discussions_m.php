@@ -36,6 +36,22 @@ class discussions_m extends CI_Model {
         }
     }
 
+    public function getDiscussion($discussion_id)
+    {
+        $this->db->from('discussions');
+        $this->db->where('id', $discussion_id);
+
+        return $this->db->get()->row();
+    }
+
+    public function getIDFromSlug($discussion_slug)
+    {
+        $this->db->where('slug', $discussion_slug);
+        $this->db->limit('1');
+
+        return $this->db->get('discussions')->row('id');
+    }
+
     public function createDiscussion($title, $content, $category)
     {
         // Get the user ID.

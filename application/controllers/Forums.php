@@ -54,7 +54,7 @@ class Forums extends MY_Controller {
 
                         $discussion->latest_post->author = $user->username;
                         $discussion->permalink = site_url('discussion/view/'.$discussion->slug);
-                        $discussion->latest_post->avatar = $this->gravatar->get($user->email);;
+                        $discussion->latest_post->avatar = $this->gravatar->get($user->email);
                     }
                 }
 

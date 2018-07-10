@@ -15,7 +15,7 @@
  */
  ?>
 
-<nav class="navbar is-light is-fixed-top" role="navigation" aria-label="main navigation">
+<nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand logo">
             <a class="navbar-item" href="<?= site_url() ?>">
@@ -32,7 +32,7 @@
         <div class="navbar-menu">
 
             <div class="navbar-start">
-                <a class="navbar-item" href="#">
+                <a class="navbar-item" href="<?= site_url('/') ?>">
                     Home
                 </a>
             </div>
@@ -50,11 +50,11 @@
 
                 <?php if (!$this->ion_auth->logged_in()) : ?>
 
-                    <a class="navbar-item" href="<?= site_url('users/sign_up') ?>">
+                    <a class="navbar-item" href="<?= site_url('users/signUp') ?>">
                         Sign Up
                     </a>
 
-                    <a class="navbar-item" href="<?= site_url('users/log_in') ?>">
+                    <a class="navbar-item" href="<?= site_url('users/logIn') ?>">
                         Log In
                     </a>
 
@@ -63,7 +63,7 @@
                     <a class="navbar-item" href="<?= site_url('users/logout') ?>">
                         Log Out
                     </a>
-                    
+
                 <?php endif ?>
             </div>
         </div>

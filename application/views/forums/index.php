@@ -48,12 +48,12 @@
 <div class="content">
 
     <?php if ($discussions) : ?>
-        <?php foreach($discussions as $discussion) :?>
+        <?php foreach($discussions as $discussion) : ?>
             <?php if ($discussion->is_sticky === '1') : ?>
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-64x64 avatar">
-                            <img src='<?= $discussion->latest_post->avatar ?>'/>
+                            <img src='<?= $discussion->latest_post->avatar ?>'>
                         </p>
                     </figure>
 

@@ -29,6 +29,11 @@ class Discussions extends MY_Controller {
 
     public function create()
     {
+        // Check if the user is logged in first.
+        if (!$this->ion_auth->logged_in()) {
+            redirect('users/logIn');
+        }
+
         // create the data object
         $data = new stdClass();
 
@@ -65,6 +70,62 @@ class Discussions extends MY_Controller {
                 redirect('/');
             }
 
+        }
+    }
+
+    public function view($discussion_slug)
+    {
+        // create the data object
+        $data = new stdClass();
+        $hero_data = new stdClass();
+
+        if (!$discussion_slug) {
+            redirect (site_url('/'));
+        } else {
+
+            // Get the discussion id
+            $discussion_id = $this->discussions->getIDFromSlug($discussion_slug);
+
+            // Fetch the discussion from the database.
+            $discussion = $this->discussions->getDiscussion($discussion_id);
+
+            // Get the category from the database.
+            $category = $this->categories->getCategory($discussion->category_id);
+
+            // Get the post for the discussion.
+            $posts = $this->posts->getDiscussionPosts($discussion_id);
+
+            foreach ($posts as $post) {
+
+                // Get the user object.
+                $user = $this->ion_auth->user($post->user_id)->row();
+
+                $post->avatar = $this->gravatar->get($user->email);
+            }
+
+            // See if the discussion is a sticky discussion.
+            if ($discussion->is_sticky) {
+                $hero_data->sticky = '<span class="icon has-text-success"><i class="fas fa-thumbtack"></i></span>';
+            } else {
+                $hero_data->sticky = '';
+            }
+
+            // See if the discussion is locked.
+            if ($discussion->is_closed) {
+                $hero_data->locked = '<span class="icon has-text-danger"><i class="fas fa-lock"></i></span>';
+            } else {
+                $hero_data->locked = '';
+            }
+
+            $data->posts = $posts;
+            $data->discussion_slug = $discussion->slug;
+            $data->sticky = $discussion->is_sticky;
+            $data->locked = $discussion->is_closed;
+            $hero_data->discussion_title = $discussion->title;
+            $hero_data->category = '<span class="tag is-'.$category->class.'"> '.anchor( site_url($category->slug), $category->name).' </span>';
+
+            // Send the data to the parser.
+            $this->renderHero('discussions/discussion', $data, $hero_data);
         }
     }
 

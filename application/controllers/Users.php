@@ -29,7 +29,7 @@ class Users extends MY_Controller {
 		$this->lang->load('auth');
     }
 
-    public function log_in()
+    public function logIn()
     {
 
         // create the data object
@@ -77,7 +77,7 @@ class Users extends MY_Controller {
 		redirect('/', 'refresh');
     }
 
-    public function sign_up()
+    public function signUp()
     {
 
     }
