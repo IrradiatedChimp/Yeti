@@ -24,7 +24,7 @@ class MY_Controller extends CI_Controller {
         $this->load->database();
 
         // Load required helpers.
-        $this->load->helper('url');
+        $this->load->helper(array('url', 'html'));
 
         // Load libs
         $this->load->library(array('ion_auth', 'gravatar', 'parser'));
@@ -35,7 +35,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('posts_m', 'posts');
     }
 
-    public function render($page, $data = NULL, $layout = 'default')
+    public function render($page, $data = null, $layout = 'default', $with_hero = false, $hero_data = null)
     {
         $header = array(
             'title' => 'Yeti Forums',
@@ -63,9 +63,17 @@ class MY_Controller extends CI_Controller {
 
         );
 
+        if ($with_hero)
+        {
+            $hero = $this->parser->parse('hero', $hero_data, true);
+        } else {
+            $hero = null;
+        }
+
         $template_data = array(
             'header' => $this->parser->parse('header', $header, true),
             'navigation' => $this->parser->parse('navigation', $navigation, true),
+            'hero' => $hero,
             'sidebar' => $this->parser->parse('sidebar_left', $sidebar, true),
             'content' => $this->parser->parse($page, $data, true),
             'footer' => $this->parser->parse('footer', $footer, true),
@@ -85,8 +93,8 @@ class MY_Controller extends CI_Controller {
         );
 
         $sidebar = array(
-            'reply_to_discussion' => anchor(site_url('discussion/reply/'.$data->discussion_slug.''), 'Reply to Discussion', array('class' => 'button is-info is-block')),
-            'locked' => $data->locked,
+            'reply_to_discussion' => anchor(site_url('discussion/reply/'.$data['discussion_slug'].''), 'Reply to Discussion', array('class' => 'button is-info is-block')),
+            'locked' => $data['locked'],
         );
 
         $footer = array(

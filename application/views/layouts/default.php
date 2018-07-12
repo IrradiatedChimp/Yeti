@@ -21,6 +21,8 @@
 
 {navigation}
 
+{hero}
+
 <section class="section">
     <div class="container">
         <div class="columns">

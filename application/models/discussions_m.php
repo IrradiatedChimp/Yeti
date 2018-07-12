@@ -24,10 +24,68 @@ class discussions_m extends CI_Model {
 
     public function getAllDiscussions()
     {
-        $this->db->order_by('created_at', 'DESC');
-        $this->db->order_by('is_sticky', 'DESC');
+        // Setup the select.
+        $this->db->select('
+            discussions.id,
+            discussions.title,
+            discussions.slug,
+            discussions.user_id,
+            discussions.category_id,
+            discussions.created_at,
+            discussions.is_sticky,
+            discussions.is_closed,
+            categories.name as category_name,
+            categories.slug as category_slug,
+            categories.class as category_class,
+        ');
+
+        // Set the join.
+        $this->db->join('categories', 'categories.id = discussions.category_id');
+
+        // Setup ordering.
+        $this->db->order_by('discussions.is_sticky', 'DESC');
+        $this->db->order_by('discussions.created_at', 'DESC');
 
         $query = $this->db->get('discussions');
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return false;
+        }
+    }
+
+    public function getCategoryDiscussions($category_id)
+    {
+        // Setup the select.
+        $this->db->select('
+            discussions.id,
+            discussions.title,
+            discussions.slug,
+            discussions.user_id,
+            discussions.category_id,
+            discussions.created_at,
+            discussions.is_sticky,
+            discussions.is_closed,
+            categories.name as category_name,
+            categories.slug as category_slug,
+            categories.class as category_class,
+        ');
+
+        // Set the join.
+        $this->db->join('categories', 'categories.id = discussions.category_id');
+
+        // Setup the ordering.
+        $this->db->order_by('discussions.is_sticky', 'DESC');
+        $this->db->order_by('discussions.created_at', 'DESC');
+
+        // Setup some options.
+        $options = array(
+            'category_id' => $category_id,
+        );
+
+        // Run the query.
+        $query = $this->db->get_where('discussions', $options);
 
         if ($query->num_rows() > 0) {
             return $query->result();

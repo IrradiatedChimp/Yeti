@@ -33,7 +33,7 @@ class Users extends MY_Controller {
     {
 
         // create the data object
-        $data = new stdClass();
+        $data = array();
 
         // Form Validation setup.
         $this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');

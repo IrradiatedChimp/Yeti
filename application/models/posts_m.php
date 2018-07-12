@@ -52,6 +52,17 @@ class posts_m extends CI_Model {
         return $this->db->insert('posts', $data);
     }
 
+    public function countDiscussionPosts($discussion_id)
+    {
+        $options = array(
+            'discussion_id' => $discussion_id,
+        );
+
+        $query = $this->db->get_where('posts', $options);
+
+        return $query->num_rows();
+    }
+
 }
 
 /* End of file posts_m.php */

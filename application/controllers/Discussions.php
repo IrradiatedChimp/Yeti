@@ -34,9 +34,6 @@ class Discussions extends MY_Controller {
             redirect('users/logIn');
         }
 
-        // create the data object
-        $data = new stdClass();
-
         // Form Validation Setup
         $this->form_validation->set_rules('title', 'Discussion Title', 'required');
         $this->form_validation->set_rules('content', 'Content', 'required');
@@ -54,7 +51,7 @@ class Discussions extends MY_Controller {
             }
 
             // Add the data to the data object.
-            $data->categories = $categories;
+            $data['categories'] = $categories;
 
             // Send the data to the page renderer.
             $this->render('discussions/create', $data);
@@ -78,9 +75,10 @@ class Discussions extends MY_Controller {
 
     public function view($discussion_slug)
     {
-        // create the data object
-        $data = new stdClass();
-        $hero_data = new stdClass();
+
+        // Setup the text for the hero.
+        $text1 = '';
+        $text2 = '';
 
         if (!$discussion_slug) {
             redirect (site_url('/'));
@@ -103,28 +101,41 @@ class Discussions extends MY_Controller {
                 // Get the user object.
                 $user = $this->ion_auth->user($post->user_id)->row();
 
-                $post->avatar = $this->gravatar->get($user->email);
+                // Build the avatar.
+                $post->avatar = img($this->gravatar->get($user->email));
+
+                // Build the data blocks for the view.
+                $block_data = array(
+                    'avatar' => img($this->gravatar->get($user->email)),
+                    'content' => $post->content,
+                );
+
+                // Send the data to the block template, return and add to posts array.
+                $data['posts'][]['block'] = $this->parser->parse('discussions/blocks/post_block', $block_data, true);
             }
 
             // See if the discussion is a sticky discussion.
             if ($discussion->is_sticky) {
-                $hero_data->sticky = '<span class="icon has-text-success"><i class="fas fa-thumbtack"></i></span>';
-            } else {
-                $hero_data->sticky = '';
+                $text1.= '<span class="icon has-text-success"><i class="fas fa-thumbtack"></i></span>&nbsp;';
             }
 
             // See if the discussion is locked.
             if ($discussion->is_closed) {
-                $hero_data->locked = '<span class="icon has-text-danger"><i class="fas fa-lock"></i></span>';
-            } else {
-                $hero_data->locked = '';
+                $text1.= '<span class="icon has-text-danger"><i class="fas fa-lock"></i></span>&nbsp;';
             }
 
-            $data->posts = $posts;
-            $data->discussion_slug = $discussion->slug;
-            $data->locked = $discussion->is_closed;
-            $hero_data->discussion_title = $discussion->title;
-            $hero_data->category = '<span class="tag is-'.$category->class.'"> '.anchor( site_url($category->slug), $category->name).' </span>';
+            // Create sidebar data to send the MY_Controller.
+            $data['discussion_slug'] = $discussion->slug;
+            $data['locked'] = $discussion->is_closed;
+
+            // Create hero block data.
+            $text1.= $discussion->title;
+            $text2.= '<span class="tag is-'.$category->class.'"> '.anchor( site_url($category->slug), $category->name).' </span>';
+
+            $hero_data = array(
+                'text_1' => $text1,
+                'text_2' => $text2,
+            );
 
             // Send the data to the parser.
             $this->renderHero('discussions/discussion', $data, $hero_data);

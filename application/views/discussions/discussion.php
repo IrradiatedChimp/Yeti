@@ -15,26 +15,10 @@
  */
  ?>
 
- <?php if ($posts) : ?>
-     <?php foreach($posts as $post) : ?>
+<?php if ($posts) : ?>
+    {posts}
+        {block}
+    {/posts}
+<?php else : ?>
 
-         <article class="media">
-             <figure class="media-left">
-                 <p class="image is-64x64 avatar">
-                     <img src="<?= $post->avatar ?>">
-                 </p>
-             </figure>
-
-             <div class="media-content">
-                 <div class="content">
-                     <p>
-                         <?= $post->content ?>
-                     </p>
-                 </div>
-             </div>
-         </article>
-
-     <?php endforeach ?>
- <?php else : ?>
-
- <?php endif ?>
+<?php endif ?>

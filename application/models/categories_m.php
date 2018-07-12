@@ -41,6 +41,15 @@ class categories_m extends CI_Model {
         return $this->db->get()->row();
     }
 
+    public function getCategoryIDFromSlug($category_slug)
+    {
+        $this->db->select('id');
+        $this->db->from('categories');
+        $this->db->where('slug', $category_slug);
+
+        return $this->db->get()->row('id');
+    }
+
 }
 
 /* End of file categories_m.php */
